@@ -82,7 +82,7 @@ Look at that beautiful traffic. Now its time to ...
 
 ![2023-01-18 09 38 10 coursecareers com 78e39ae4181d](https://user-images.githubusercontent.com/109401839/213215738-c6379380-e5b8-438b-95a8-6906a16ff339.jpg)
 
-3. Restart and then log back into DC-1 as user: mydomain.com\labuser
+3. Restart and then log back into DC-1 as user: mydomain.com\labuser which is the Fully Qualified Domain Name (FQDN) to the DC-1 Sever.
 
 ![vivaldi_xJc36FTsPS](https://user-images.githubusercontent.com/109401839/213216324-dccbe8d1-3791-4eea-8609-6643d27f1bc9.png)
 
