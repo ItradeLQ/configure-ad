@@ -3,8 +3,8 @@
 </p>
 
 <h1>On-premises Active Directory Deployed in the Cloud (Azure)</h1>
-This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines.<br />
 
+Welcome back! This tutorial outlines the implementation of on-premises Active Directory within Azure Virtual Machines.<br />
 
 <h2>Environments and Technologies Used</h2>
 
@@ -20,277 +20,175 @@ This tutorial outlines the implementation of on-premises Active Directory within
 
 <h2>High-Level Deployment and Configuration Steps</h2>
 
-- Resource group and virtual machine
-- Create domain controller and client 1 and ensure connectivity between them
-- Install Active Directory Domain Services on DC-1 
-- Create bunch of new users using Power Shell ISE as an administrator
+- Setup Resources In Azure
+- Ensure Connection between Client and Domain Controller
+- Install Active Directory and Admin Creation
+- Create X-Amount of Client Users using PowerShell Script
 
-<h2>Deployment and Configuration Steps</h2>
+<h2>Setup Resources in Azure</h2>
 
-<p>
-Create the DC-1 (Domain Controller) VM Windows Server 2022 and the Client VM (Client-1) Windows 10. Make sure use the same Resource Group and Vnet that was created while creating the DC-1.
-</p>
-<br />
-<p>
-<img src="https://i.imgur.com/YKi0ZWr.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Set Domain Controller’s NIC Private IP address to be static
+1. Create the Domain Controller VM (Windows Server 2022) named “DC-1"
+   Take note of the Resource Group and Virtual Network (Vnet) that get created at this time
+2. Set Domain Controller’s NIC Private IP address to be static
+DC-1 > Networking > NIC > IP Configurations
+
+![vivaldi_zDAEQAVoDh](https://user-images.githubusercontent.com/109401839/212756392-d05a4c3b-610c-4fe8-a5e8-1e31e86da7e3.png)
+
+3. Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in the DC-1 step.
+4. Ensure that both VMs are in the same Vnet [you can check the topology with Network Watcher]
+Here is an illustration of what we are doing: 
+
+![vivaldi_z3kENJuYuV](https://user-images.githubusercontent.com/109401839/213212076-117f26c0-c06f-4bb0-871a-45a97f293acf.png)
 
 
-</p>
-<br />
+![vivaldi_QbUpS9XsXc](https://user-images.githubusercontent.com/109401839/212757249-70c7c150-9627-408f-a285-53b0f9d34a09.png)
 
-<p>
-<img src="https://i.imgur.com/NIhcOd2.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
+<h2>Ensure Connection between Client and Domain Controller<h2>
 
-Go to DC-1>networking >network interface dc-1365>Ip configurations and change the Ip address from dynamic to static and save it.
-  
-Make sure both DC-1 and Client-1 are in same virtual network.
-</p>
-<br />
+1. Login to Client-1 with Remote Desktop and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping)
 
-<p>
-<img src="https://i.imgur.com/QposvOi.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Ensure the connectivity between the client and Domain Controller and to do this login to Client-1 with Remote Desktop and ping the DC-1 private IP address with ping -t  (perpetual ping), and it will time out because domain controller windows firewall is blocking ICMP traffic.
+![vivaldi_3DGaaVQRmB](https://user-images.githubusercontent.com/109401839/213212386-519dc0bd-6913-49f1-b3e3-8bbb260741a5.png)
 
-</p>
-<br />
+Oh! Notice we are getting a "Request timed out." Let us fix that. 
 
-<p>
-<img src="https://i.imgur.com/65Yc0pN.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Login to the DC-1 with remote desktop and enable ICMPv4 on the local windows Firewall.
-  
-  
-To do that click start Wf.msc>inbound rules>sort by protocol and find icmpv4>enable both.
-Minimize DC-1 and check client-1
+2. Login to the Domain Controller and enable ICMPv4 in on the local windows Firewall, keep client-1 instance open. 
 
-</p>
-<br />
+- Start Menu > Windows Defender Firewall with Advanced Secruity programme > Inbound Rules > Sort by Porotocol > 
 
-<p>
-<img src="https://i.imgur.com/axndXG6.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-We can see the ping is succeed
-  
-  
-Press ctrl c to stop the ping
-</p>
-<br />
+- Enable "Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) Private and Domain Profiles. 2 Inbound Rules.
 
-<p>
-<img src="https://i.imgur.com/Z0fbZu5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Install Active Directory Domain Services.
+![Inkedvivaldi_Gb9rFL8rhC](https://user-images.githubusercontent.com/109401839/213214025-94b0bfb0-f017-4e8b-8676-d01ffeb9ab93.jpg)
 
-Login to DC-1 and open server manager>add roles and features, proceed these steps and then mark active directory domain services>add features and install.
 
-</p>
-<br />
-<p>
-<img src="https://i.imgur.com/VBHNabC.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+3. Check back at Client-1 to see the ping succeed
 
-<img src="https://i.imgur.com/ch0Sfkq.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  
+![vivaldi_WbtokOOBck](https://user-images.githubusercontent.com/109401839/213214146-018e77d5-98a4-4256-91fd-16647ff58006.png)
 
-<img src="https://i.imgur.com/9a3tLi5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  
-</p>
-<p>
-Click to the yellow exclamation mark on top right side>promote this server to a domain controller>add a new forest as mydomain.com ( it can be anything, just remember what it is)>mydomain.com>set password> and install 
+Look at that beautiful traffic. Now its time to ... 
 
-</p>
-<br />
+<h2>Install Active Directory<h2>
 
-<p>
-<img src="https://i.imgur.com/BkCxDE9.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Restart and then log back into DC-1 as user: mydomain.com\kanzalab (fully qualified domain name)
-</p>
-<br />
 
-<p>
-<img src="https://i.imgur.com/1WZk2vk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Create couple of organizational units inside Active Directory Users and Computer (ADUC) 
-Click start and type active directory users and computers>right click mydomain.com>new>organizational unit.
 
-</p>
-<br />
+1. Login to DC-1 and install Active Directory Domain Services
 
-<p>
-<img src="https://i.imgur.com/6yBwtlZ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Create two Organizational units, first is _EMPLOYEES and the second is _ADMINS and then refresh mydomain.com.
-</p>
-<br />
+- Server Manager > "Add Roles and Features" > Check "Active Directory Domain Services"
 
-<p>
-<img src="https://i.imgur.com/K3gTgmi.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Create another administrative account that tie to us and then logout from kanza lab and create our own admin account.
-Admins>right click and add new users as kanza naqvi 
+![vivaldi_od5BgUKG6G](https://user-images.githubusercontent.com/109401839/213214935-0fe230d0-60be-431a-bf31-53cfc50748b9.png)
 
-</p>
-<br />
+2. Promote as a DC: Setup a new forest as mydomain.com (can be anything, just remember what it is)
 
-<p>
-<img src="https://i.imgur.com/kRYy1Dw.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Create a new employee named kanza naqvi with the username kanza_admin.
-</p>
-<br />
+![2023-01-18 09 37 20 coursecareers com a3928ff24e0f](https://user-images.githubusercontent.com/109401839/213215535-f43842d0-f1ab-4c6a-91d1-18d8a9bdff06.jpg)
 
-<p>
-<img src="https://i.imgur.com/ZNBInlU.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Assign kanza naqvi to Domain Admin Group. Domain Admin group is a build in security group and anyone who is the member of this group can make changes to the domain and perform all kind of activity.
+![2023-01-18 09 38 10 coursecareers com 78e39ae4181d](https://user-images.githubusercontent.com/109401839/213215738-c6379380-e5b8-438b-95a8-6906a16ff339.jpg)
 
-Right click to kanza naqvi>properties>member of>add>type domain and click check names and join domain admin group.
-Add kanza_admin to the “Domain Admins” Security Group
+3. Restart and then log back into DC-1 as user: mydomain.com\labuser
 
-</p>
-<br />
+![vivaldi_xJc36FTsPS](https://user-images.githubusercontent.com/109401839/213216324-dccbe8d1-3791-4eea-8609-6643d27f1bc9.png)
 
-<p>
-<img src="https://i.imgur.com/gQUCjfu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
+![vivaldi_ADY0CCC3v8](https://user-images.githubusercontent.com/109401839/213217001-5c300c3f-f194-4df9-bb68-b4fb464e500c.png)
 
-Log out/close the Remote Desktop connection to DC-1 and log back in as “mydomain.com\jane_admin”
-User kanza_admin as your admin account.
-  
-  
-Join Client-1 to (mydomain.com) and when we do that even though our account has not existed on this client 1 before  we will still able to join client 1 as kanza_admin or any other domain account
-</p>
-<br />
+4. In Active Directory Users and Computers (ADUC), create an Organizational Unit (OU) called “_EMPLOYEES"
 
-<p>
-<img src="https://i.imgur.com/Klarkwf.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-From the Azure Portal, set Client-1 DNS settings to the DC-1 Private IP address because we want client-1 to use DNS server of DC-1.
-Because domain controller knows what mydomain.com is, if we uses client-1 dns server and say I want to join mydomain.com, this dns server is going to look out on the internet and it will fail but if we tell client-1 to use our domain controller dns server as its dns server, when client-1 will try to join the mydomain.com our domain controller/dns server is use to join it's ip private address and client 1 is able to join it.
-  
-  
-Go to DC-1 inside the azure portal and copy private ip address and then go to client 1>networking>click network interface clint 1138>dns servers>custom and copy dc1 private ip address>save
-  
-  
-From the Azure Portal, restart Client-1 within the portal
-Login to Client-1 (Remote Desktop) as the original local admin (kanzalab) and join it to the domain (computer will restart)
+![Inkedvivaldi_YgN8JfZgEn](https://user-images.githubusercontent.com/109401839/213217570-765d4e0f-05dd-4985-b6e5-0ce1210d6338.jpg)
 
-</p>
-<br />
+5. Create a new OU named “_ADMINS"
 
-<p>
-<img src="https://i.imgur.com/nKYbb8s.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Open the command line in Client-1 and type ipconfig/ all and we can see the DNS Server is using DC-1 private IP Address as its dns server.
-</p>
-<br />
+![vivaldi_JXNeaUMVFe](https://user-images.githubusercontent.com/109401839/213218280-33c7fe97-751c-4ba8-8900-dd90821fc579.png)
 
-<p>
-<img src="https://i.imgur.com/QBxeBM6.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Join client 1 to the domain. Click start system>rename this pc advanced>change>domain> mydomain.com. 
-</p>
-<br />
+6. Create a new employee named “Jane Doe” (same password) with the username of “jane_admin”
+7. Add jane_admin to the “Domain Admins” Security Group
 
-<p>
-<img src="https://i.imgur.com/nh8fm2o.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Now use mydomain.com\kanza_admin and password.
-Restart the computer.
-</p>
-<br />
+![2023-01-18 09 46 52 camo githubusercontent com 6837ec50b4c5](https://user-images.githubusercontent.com/109401839/213219498-06b86aa6-a2ef-48cb-b653-069ca85c0b0e.jpg)
 
-<p>
-<img src="https://i.imgur.com/ZHugLK5.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
+8. Log out/close the Remote Desktop connection to DC-1 and log back in as “mydomain.com\jane_admin"
+9. User jane_admin as your admin account from now on
 
-  
-<img src="https://i.imgur.com/ZslhlgR.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Login to Client 1 go to system>remote desktop>select users that can remotely access this PC>add>domain users>check names>ok.
-All domain users are allowed to login to this computer. 
+<h2>Join Client-1 to your domain (mydomain.com)<h2>
 
-</p>
-<br />
+![vivaldi_cRAVrKouac](https://user-images.githubusercontent.com/109401839/213221204-72c7058c-3730-47d9-b9fb-4435ee87c3fd.png)
 
-<p>
-<img src="https://i.imgur.com/uftNQG6.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-These are the different users who loged in to this computer.
-</p>
-<br />
+1. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address
+2. From the Azure Portal, restart Client-1
+3. Login to Client-1 (Remote Desktop) as the original local admin (labuser) and join it to the domain (computer will restart)
+4. Login to the Domain Controller (Remote Desktop) and verify Client-1 shows up in Active Directory Users and Computers (ADUC) inside the “Computers” container on the root of the domain
+5. Create a new OU named “_CLIENTS” and drag Client-1 into there
 
-<p>
-<img src="https://i.imgur.com/hNLkctu.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Create bunch of random domain users inside our domain and then we gonna use one these random user to login in to  client 1.First this is the raw code that we will paste in to Power Shell ISE
-</p>
-<br />
+<H2>Setup Remote Desktop for non-administrative users on Client-1<H2>
 
-<p>
-<img src="https://i.imgur.com/x8IzAHJ.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  
-  
-<img src="https://i.imgur.com/q0K4zGS.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Open the Power Shell ISE as an Administrator and in the new folder paste the raw code and click run and we can see the list of users is creating who are able to remote desktop into client-1.
-</p>
-<br />
+1. Log into Client-1 as mydomain.com\jane_admin and open system properties
 
-<p>
-<img src="https://i.imgur.com/1Eu2dCk.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Now if we go to ADUC and refresh employees we can see accounts are creating.
-</p>
-<br />
+![vivaldi_pBr66s3R4C](https://user-images.githubusercontent.com/109401839/213220623-04e09574-52ad-407a-945b-f53f52417b50.png)
 
-<p>
-<img src="https://i.imgur.com/L0TD3nS.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-Select any rendom user and logout from client-1 and login back as that user.
-</p>
-<br />
+2. Click “Remote Desktop”
+3. Allow “domain users” access to remote desktop
 
-<p>
-<img src="https://i.imgur.com/oL282U2.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-</p>
-<p>
-These are different users who logged into to this computer.
-</p>
-<br />
+![Inkedvivaldi_uNcBpy336J](https://user-images.githubusercontent.com/109401839/213223500-193b62e3-062f-4f69-8da4-5ef96692ec31.jpg)
 
-<p>
-<img src="https://i.imgur.com/L5A8JCO.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  
-<img src="https://i.imgur.com/gwsVhKG.png" height="80%" width="80%" alt="Disk Sanitization Steps"/>
-  
-<p>
-We can unlocked the accounts, reset passwords, enable and disable account.
-</p>
-<br />
+
+4. You can now log into Client-1 as a normal, non-administrative user now
+5. Normally you’d want to do this with Group Policy that allows you to change MANY systems at once
+
+<H2>Create a bunch of additional users and attempt to log into client-1 with one of the users<H2>
+
+1. Login to DC-1 as jane_admin
+2. Open PowerShell_ise as an administrator
+3. Create a new File and paste the contents of the [script] below:
+
+
+> '''Function generate-random-name() {
+>    $consonants = @('b','c','d','f','g','h','j','k','l','m','n','p','q','r','s','t','v','w','x','z')
+>    $vowels = @('a','e','i','o','u','y')
+>    $nameLength = Get-Random -Minimum 3 -Maximum 7
+>    $count = 0
+>    $name = ""
+>
+>    while ($count -lt $nameLength) {
+>        if ($($count % 2) -eq 0) {
+>            $name += $consonants[$(Get-Random -Minimum 0 -Maximum $($consonants.Count - 1))]
+>        }
+>        else {
+>            $name += $vowels[$(Get-Random -Minimum 0 -Maximum $($vowels.Count - 1))]
+>        }
+>        $count++
+>    }
+>
+>    return $name
+>
+> }
+>
+> $count = 1
+> while ($count -lt $NUMBER_OF_ACCOUNTS_TO_CREATE) {
+>    $fisrtName = generate-random-name
+>    $lastName = generate-random-name
+>    $username = $fisrtName + '.' + $lastName
+>    $password = ConvertTo-SecureString $PASSWORD_FOR_USERS -AsPlainText -Force
+>
+>    Write-Host "Creating user: $($username)" -BackgroundColor Black -ForegroundColor Cyan
+>    
+>    New-AdUser -AccountPassword $password `
+>               -GivenName $firstName `
+>               -Surname $lastName `
+>               -DisplayName $username `
+>               -Name $username `
+>               -EmployeeID $username `
+>               -PasswordNeverExpires $true `
+>               -Path "ou=_EMPLOYEES,$(([ADSI]`"").distinguishedName)" `
+>               -Enabled $true
+>    $count++
+> }''' 
+
+[Code Source](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
+
+4. Run the script and observe the accounts being created
+
+![vivaldi_Lr0ydPgSZ7](https://user-images.githubusercontent.com/109401839/213226346-7dc7f494-6299-4fab-a210-d07a16b71b97.png)
+
+
+5. When finished, open ADUC and observe the accounts in the appropriate OU
+6. Attempt to log into Client-1 with one of the accounts (take note of the password in the script)
+
+![vivaldi_hbfgkZ3l45](https://user-images.githubusercontent.com/109401839/213226577-6f5bd613-ba81-4a62-bc7c-98896e41c94a.png)
+
+
+Thats is it ! In the [next tutorial](https://github.com/fnabeel/-azure-network-protocols), we will go over various network traffic to and from Azure Virtual Machines with Wireshark as well as experiment with Network Security Groups.
