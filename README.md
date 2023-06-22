@@ -183,7 +183,7 @@ Look at that beautiful traffic. Now its time to ...
 
 4. Run the script and observe the accounts being created
    
-<a href="https://imgur.com/6mD6hKF"><img src="https://i.imgur.com/6mD6hKF.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/EhpAKFp"><img src="https://i.imgur.com/EhpAKFp.png" title="source: imgur.com" /></a>
 
 5. When finished, open Active Directory Users and Control (ADUC) and observe the accounts in the appropriate OU
    
