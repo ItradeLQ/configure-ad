@@ -189,7 +189,7 @@ Look at that beautiful traffic. Now its time to ...
    
 6. Attempt to log into Client-1 with one of the accounts (take note of the password in the script)
 
-<a href="https://imgur.com/eSZlPvj"><img src="https://i.imgur.com/eSZlPvj.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/st3m5KO"><img src="https://i.imgur.com/st3m5KO.png" title="source: imgur.com" /></a>
 
 
 We've reached the end of this exciting tutorial! In the [next tutorial](https://github.com/ItradeLQ/azure-network-protocols), the focus will be reviewing various network traffic to and from Azure Virtual Machines with Wireshark and experimenting with Network Security Groups (NSGs).
