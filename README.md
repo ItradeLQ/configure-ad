@@ -182,11 +182,11 @@ Look at that beautiful traffic. Now its time to ...
 [Code Source](https://github.com/joshmadakor1/AD_PS/blob/master/Generate-Names-Create-Users.ps1)
 
 4. Run the script and observe the accounts being created
-
+   
 <a href="https://imgur.com/6mD6hKF"><img src="https://i.imgur.com/6mD6hKF.png" title="source: imgur.com" /></a>
 
-
 5. When finished, open Active Directory Users and Control (ADUC) and observe the accounts in the appropriate OU
+   
 6. Attempt to log into Client-1 with one of the accounts (take note of the password in the script)
 
 <a href="https://imgur.com/eSZlPvj"><img src="https://i.imgur.com/eSZlPvj.png" title="source: imgur.com" /></a>
