@@ -32,22 +32,22 @@ Welcome back! This tutorial outlines the implementation of on-premises Active Di
 2. Set Domain Controller’s NIC Private IP address to be static
 DC-1 > Networking > NIC > IP Configurations
 
-![vivaldi_zDAEQAVoDh](https://user-images.githubusercontent.com/109401839/212756392-d05a4c3b-610c-4fe8-a5e8-1e31e86da7e3.png)
+<a href="https://imgur.com/TB4WaEn"><img src="https://i.imgur.com/TB4WaEn.png" title="source: imgur.com" /></a>
 
 3. Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in the DC-1 step.
 4. Ensure that both VMs are in the same Vnet [you can check the topology with Network Watcher]
 Here is an illustration of what we are doing: 
 
-![vivaldi_z3kENJuYuV](https://user-images.githubusercontent.com/109401839/213212076-117f26c0-c06f-4bb0-871a-45a97f293acf.png)
+<a href="https://imgur.com/AFTb8jz"><img src="https://i.imgur.com/AFTb8jz.png" title="source: imgur.com" /></a>
 
 
-![vivaldi_QbUpS9XsXc](https://user-images.githubusercontent.com/109401839/212757249-70c7c150-9627-408f-a285-53b0f9d34a09.png)
+<a href="https://imgur.com/2URx1hb"><img src="https://i.imgur.com/2URx1hb.png" title="source: imgur.com" /></a>
 
 <h2>Ensure Connection between Client and Domain Controller<h2>
 
 1. Login to Client-1 with Remote Desktop and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping)
 
-![vivaldi_3DGaaVQRmB](https://user-images.githubusercontent.com/109401839/213212386-519dc0bd-6913-49f1-b3e3-8bbb260741a5.png)
+<a href="https://imgur.com/yyIKAar"><img src="https://i.imgur.com/yyIKAar.png" title="source: imgur.com" /></a>
 
 Oh! Notice we are getting a "Request timed out." Let us fix that. 
 
@@ -57,7 +57,7 @@ Oh! Notice we are getting a "Request timed out." Let us fix that.
 
 - Enable "Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) Private and Domain Profiles. 2 Inbound Rules.
 
-![Inkedvivaldi_Gb9rFL8rhC](https://user-images.githubusercontent.com/109401839/213214025-94b0bfb0-f017-4e8b-8676-d01ffeb9ab93.jpg)
+<a href="https://imgur.com/xYKRbfw"><img src="https://i.imgur.com/xYKRbfw.png" title="source: imgur.com" /></a>
 
 
 3. Check back at Client-1 to see the ping succeed
@@ -74,65 +74,66 @@ Look at that beautiful traffic. Now its time to ...
 
 - Server Manager > "Add Roles and Features" > Check "Active Directory Domain Services"
 
-![vivaldi_od5BgUKG6G](https://user-images.githubusercontent.com/109401839/213214935-0fe230d0-60be-431a-bf31-53cfc50748b9.png)
+<a href="https://imgur.com/9WQydZ5"><img src="https://i.imgur.com/9WQydZ5.png" title="source: imgur.com" /></a>
 
 2. Promote as a DC: Setup a new forest as mydomain.com (can be anything, just remember what it is)
 
-![2023-01-18 09 37 20 coursecareers com a3928ff24e0f](https://user-images.githubusercontent.com/109401839/213215535-f43842d0-f1ab-4c6a-91d1-18d8a9bdff06.jpg)
+<a href="https://imgur.com/rxf1BoP"><img src="https://i.imgur.com/rxf1BoP.png" title="source: imgur.com" /></a>
 
 ![2023-01-18 09 38 10 coursecareers com 78e39ae4181d](https://user-images.githubusercontent.com/109401839/213215738-c6379380-e5b8-438b-95a8-6906a16ff339.jpg)
 
 3. Restart and then log back into DC-1 as user: mydomain.com\labuser which is the Fully Qualified Domain Name (FQDN) to the DC-1 Sever.
 
-![vivaldi_xJc36FTsPS](https://user-images.githubusercontent.com/109401839/213216324-dccbe8d1-3791-4eea-8609-6643d27f1bc9.png)
+<a href="https://imgur.com/7ZaHmOa"><img src="https://i.imgur.com/7ZaHmOa.png" title="source: imgur.com" /></a>
 
-![vivaldi_ADY0CCC3v8](https://user-images.githubusercontent.com/109401839/213217001-5c300c3f-f194-4df9-bb68-b4fb464e500c.png)
+<a href="https://imgur.com/A7uu2gX"><img src="https://i.imgur.com/A7uu2gX.png" title="source: imgur.com" /></a>
 
 4. In Active Directory Users and Computers (ADUC), create an Organizational Unit (OU) called “_EMPLOYEES"
 
-![Inkedvivaldi_YgN8JfZgEn](https://user-images.githubusercontent.com/109401839/213217570-765d4e0f-05dd-4985-b6e5-0ce1210d6338.jpg)
+<a href="https://imgur.com/JqxFJdo"><img src="https://i.imgur.com/JqxFJdo.png" title="source: imgur.com" /></a>
 
-5. Create a new OU named “_ADMINS"
+5. Create a new Organisational Unit (OU) named “_ADMINS"
 
-![vivaldi_JXNeaUMVFe](https://user-images.githubusercontent.com/109401839/213218280-33c7fe97-751c-4ba8-8900-dd90821fc579.png)
+<a href="https://imgur.com/04xMj2M"><img src="https://i.imgur.com/04xMj2M.png" title="source: imgur.com" /></a>
 
 6. Create a new employee named “Jane Doe” (same password) with the username of “jane_admin”
 7. Add jane_admin to the “Domain Admins” Security Group
 
-![2023-01-18 09 46 52 camo githubusercontent com 6837ec50b4c5](https://user-images.githubusercontent.com/109401839/213219498-06b86aa6-a2ef-48cb-b653-069ca85c0b0e.jpg)
+<a href="https://imgur.com/XaLDemD"><img src="https://i.imgur.com/XaLDemD.png" title="source: imgur.com" /></a>
 
 8. Log out/close the Remote Desktop connection to DC-1 and log back in as “mydomain.com\jane_admin"
 9. User jane_admin as your admin account from now on
 
 <h2>Join Client-1 to your domain (mydomain.com)<h2>
 
-![vivaldi_cRAVrKouac](https://user-images.githubusercontent.com/109401839/213221204-72c7058c-3730-47d9-b9fb-4435ee87c3fd.png)
+<a href="https://imgur.com/2URx1hb"><img src="https://i.imgur.com/2URx1hb.png" title="source: imgur.com" /></a>
 
 1. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address
-2. From the Azure Portal, restart Client-1
-3. Login to Client-1 (Remote Desktop) as the original local admin (labuser) and join it to the domain (computer will restart)
-4. Login to the Domain Controller (Remote Desktop) and verify Client-1 shows up in Active Directory Users and Computers (ADUC) inside the “Computers” container on the root of the domain
-5. Create a new OU named “_CLIENTS” and drag Client-1 into there
+2. From the Azure Portal, restart Client-1, which will flush DNS cache
+3. Login to Client-1 (Remote Desktop) as the original local admin (labuser) and join it to the domain (computer will restart). Run Powershell to ensure that the DNS of Client-1 now points to the private IP address of DC-1 and you're not getting an error when joining Client-1 to the domain.
+4. Client-1 will prompt to restart to join the Domain.
+   
+<a href="https://imgur.com/VkQx05Y"><img src="https://i.imgur.com/VkQx05Y.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/ZB6brYl"><img src="https://i.imgur.com/ZB6brYl.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/pquFTah"><img src="https://i.imgur.com/pquFTah.png" title="source: imgur.com" /></a>
+
 
 <H2>Setup Remote Desktop for non-administrative users on Client-1<H2>
 
 1. Log into Client-1 as mydomain.com\jane_admin and open system properties
-
-![vivaldi_pBr66s3R4C](https://user-images.githubusercontent.com/109401839/213220623-04e09574-52ad-407a-945b-f53f52417b50.png)
-
 2. Click “Remote Desktop”
 3. Allow “domain users” access to remote desktop
 
-![Inkedvivaldi_uNcBpy336J](https://user-images.githubusercontent.com/109401839/213223500-193b62e3-062f-4f69-8da4-5ef96692ec31.jpg)
+<a href="https://imgur.com/POD6uDf"><img src="https://i.imgur.com/POD6uDf.png" title="source: imgur.com" /></a>
 
 
 4. You can now log into Client-1 as a normal, non-administrative user now
 5. Normally you’d want to do this with Group Policy that allows you to change MANY systems at once
 
-<H2>Create a bunch of additional users and attempt to log into client-1 with one of the users<H2>
+<H2>Create additional users and attempt to log into Client-1 with one of the users<H2>
 
 1. Login to DC-1 as jane_admin
-2. Open PowerShell_ise as an administrator
+2. Open PowerShell_ISE as an administrator
 3. Create a new File and paste the contents of the [script] below:
 
 
@@ -182,13 +183,13 @@ Look at that beautiful traffic. Now its time to ...
 
 4. Run the script and observe the accounts being created
 
-![vivaldi_Lr0ydPgSZ7](https://user-images.githubusercontent.com/109401839/213226346-7dc7f494-6299-4fab-a210-d07a16b71b97.png)
+<a href="https://imgur.com/6mD6hKF"><img src="https://i.imgur.com/6mD6hKF.png" title="source: imgur.com" /></a>
 
 
-5. When finished, open ADUC and observe the accounts in the appropriate OU
+5. When finished, open Active Directory Users and Control (ADUC) and observe the accounts in the appropriate OU
 6. Attempt to log into Client-1 with one of the accounts (take note of the password in the script)
 
-![vivaldi_hbfgkZ3l45](https://user-images.githubusercontent.com/109401839/213226577-6f5bd613-ba81-4a62-bc7c-98896e41c94a.png)
+<a href="https://imgur.com/eSZlPvj"><img src="https://i.imgur.com/eSZlPvj.png" title="source: imgur.com" /></a>
 
 
 We've reached the end of this exciting tutorial! In the [next tutorial](https://github.com/ItradeLQ/azure-network-protocols), the focus will be reviewing various network traffic to and from Azure Virtual Machines with Wireshark and experimenting with Network Security Groups (NSGs).
