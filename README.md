@@ -29,7 +29,7 @@ Welcome back! This tutorial outlines the implementation of on-premises Active Di
 
 1. Create the Domain Controller VM (Windows Server 2022) named “DC-1"
    Take note of the Resource Group and Virtual Network (Vnet) that get created at this time
-2. Set Domain Controller’s NIC Private IP address to be static
+2. Set Domain Controller’s Network Interface Card (NIC) Private IP address to be static
 DC-1 > Networking > NIC > IP Configurations
 
 <a href="https://imgur.com/TB4WaEn"><img src="https://i.imgur.com/TB4WaEn.png" title="source: imgur.com" /></a>
@@ -49,32 +49,29 @@ Here is an illustration of what we are doing:
 
 <a href="https://imgur.com/yyIKAar"><img src="https://i.imgur.com/yyIKAar.png" title="source: imgur.com" /></a>
 
-Oh! Notice we are getting a "Request timed out." Let us fix that. 
+Notice how, we are getting a "request timed out." Let us fix that. 
 
-2. Login to the Domain Controller and enable ICMPv4 in on the local windows Firewall, keep client-1 instance open. 
+2. Login to the Domain Controller and enable ICMPv4 in on the local Windows Firewall. Keep client-1 instance open. 
 
-- Start Menu > Windows Defender Firewall with Advanced Secruity programme > Inbound Rules > Sort by Porotocol > 
+- Start Menu -> Windows Defender Firewall with Advanced Secruity programme -> Inbound Rules -> Sort by Protocol -> 
 
 - Enable "Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) Private and Domain Profiles. 2 Inbound Rules.
 
 <a href="https://imgur.com/xYKRbfw"><img src="https://i.imgur.com/xYKRbfw.png" title="source: imgur.com" /></a>
 
 
-3. Check back at Client-1 to see the ping succeed
+3. Return to Client-1 to see the ping succeed
 
-![vivaldi_WbtokOOBck](https://user-images.githubusercontent.com/109401839/213214146-018e77d5-98a4-4256-91fd-16647ff58006.png)
+<a href="https://imgur.com/9WQydZ5"><img src="https://i.imgur.com/9WQydZ5.png" title="source: imgur.com" /></a>
 
-Look at that beautiful traffic. Now its time to ... 
+ICMP is what is used to ping the VM, hence why traffic resumes when it is enabled.
 
 <h2>Install Active Directory<h2>
-
 
 
 1. Login to DC-1 and install Active Directory Domain Services
 
 - Server Manager > "Add Roles and Features" > Check "Active Directory Domain Services"
-
-<a href="https://imgur.com/9WQydZ5"><img src="https://i.imgur.com/9WQydZ5.png" title="source: imgur.com" /></a>
 
 2. Promote as a DC: Setup a new forest as mydomain.com (can be anything, just remember what it is)
 
