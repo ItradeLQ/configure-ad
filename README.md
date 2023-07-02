@@ -32,13 +32,15 @@ Welcome back! This tutorial outlines the implementation of on-premises Active Di
 2. Set Domain Controller’s Network Interface Card (NIC) Private IP address to be static
 DC-1 > Networking > NIC > IP Configurations
 
-<a href="https://imgur.com/TB4WaEn"><img src="https://i.imgur.com/TB4WaEn.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/FPO2IYk"><img src="https://i.imgur.com/FPO2IYk.png" title="source: imgur.com" /></a>
+
+<a href="https://imgur.com/XGvwlCc"><img src="https://i.imgur.com/XGvwlCc.png" title="source: imgur.com" /></a>
 
 3. Create the Client VM (Windows 10) named “Client-1”. Use the same Resource Group and Vnet that was created in the DC-1 step.
 4. Ensure that both VMs are in the same Vnet [you can check the topology with Network Watcher]
 Here is an illustration of what we are doing: 
 
-<a href="https://imgur.com/AFTb8jz"><img src="https://i.imgur.com/AFTb8jz.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/8pnNkjj"><img src="https://i.imgur.com/8pnNkjj.png" title="source: imgur.com" /></a>
 
 
 <a href="https://imgur.com/2URx1hb"><img src="https://i.imgur.com/2URx1hb.png" title="source: imgur.com" /></a>
@@ -47,13 +49,13 @@ Here is an illustration of what we are doing:
 
 1. Login to Client-1 with Remote Desktop and ping DC-1’s private IP address with ping -t <ip address> (perpetual ping)
 
-<a href="https://imgur.com/yyIKAar"><img src="https://i.imgur.com/yyIKAar.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/1eG0bfT"><img src="https://i.imgur.com/1eG0bfT.png" title="source: imgur.com" /></a>
 
 Notice how, we are getting a "request timed out." Let us fix that. 
 
-2. Login to the Domain Controller and enable ICMPv4 in on the local Windows Firewall. Keep client-1 instance open. 
+2. Login to the Domain Controller and enable ICMPv4 on the local Windows Firewall. Keep client-1 instance open. 
 
-- Start Menu -> Windows Defender Firewall with Advanced Secruity programme -> Inbound Rules -> Sort by Protocol -> 
+- Start Menu -> Windows Defender Firewall with Advanced Security programme -> Inbound Rules -> Sort by Protocol -> 
 
 - Enable "Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) Private and Domain Profiles. 2 Inbound Rules.
 
@@ -73,6 +75,8 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 
 - Server Manager > "Add Roles and Features" > Check "Active Directory Domain Services"
 
+<a href="https://imgur.com/N3ssKOS"><img src="https://i.imgur.com/N3ssKOS.png" title="source: imgur.com" /></a>
+
 2. Promote as a DC: Setup a new forest as mydomain.com (can be anything, just remember what it is)
 
 <a href="https://imgur.com/rxf1BoP"><img src="https://i.imgur.com/rxf1BoP.png" title="source: imgur.com" /></a>
@@ -81,17 +85,17 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 
 3. Restart and then log back into DC-1 as user: mydomain.com\labuser which is the Fully Qualified Domain Name (FQDN) to the DC-1 Sever.
 
-<a href="https://imgur.com/7ZaHmOa"><img src="https://i.imgur.com/7ZaHmOa.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/ulqvlWB"><img src="https://i.imgur.com/ulqvlWB.png" title="source: imgur.com" /></a>
 
-<a href="https://imgur.com/A7uu2gX"><img src="https://i.imgur.com/A7uu2gX.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/gMUnmgV"><img src="https://i.imgur.com/gMUnmgV.png" title="source: imgur.com" /></a>
 
 4. In Active Directory Users and Computers (ADUC), create an Organizational Unit (OU) called “_EMPLOYEES"
 
-<a href="https://imgur.com/JqxFJdo"><img src="https://i.imgur.com/JqxFJdo.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/2kKLszL"><img src="https://i.imgur.com/2kKLszL.png" title="source: imgur.com" /></a>
 
 5. Create a new Organisational Unit (OU) named “_ADMINS"
 
-<a href="https://imgur.com/04xMj2M"><img src="https://i.imgur.com/04xMj2M.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/r90qNqo"><img src="https://i.imgur.com/r90qNqo.png" title="source: imgur.com" /></a>
 
 6. Create a new employee named “Jane Doe” (same password) with the username of “jane_admin”
 7. Add jane_admin to the “Domain Admins” Security Group
@@ -110,10 +114,13 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 3. Login to Client-1 (Remote Desktop) as the original local admin (labuser) and join it to the domain (computer will restart). Run Powershell to ensure that the DNS of Client-1 now points to the private IP address of DC-1 and you're not getting an error when joining Client-1 to the domain.
 4. Client-1 will prompt to restart to join the Domain.
    
-<a href="https://imgur.com/VkQx05Y"><img src="https://i.imgur.com/VkQx05Y.png" title="source: imgur.com" /></a>
-<a href="https://imgur.com/ZB6brYl"><img src="https://i.imgur.com/ZB6brYl.png" title="source: imgur.com" /></a>
-<a href="https://imgur.com/pquFTah"><img src="https://i.imgur.com/pquFTah.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/d7BbzBz"><img src="https://i.imgur.com/d7BbzBz.png" title="source: imgur.com" /></a>
 
+<a href="https://imgur.com/6R2Rcwc"><img src="https://i.imgur.com/6R2Rcwc.png" title="source: imgur.com" /></a>
+
+<a href="https://imgur.com/AWXg6hz"><img src="https://i.imgur.com/AWXg6hz.png" title="source: imgur.com" /></a>
+
+<a href="https://imgur.com/UlB5k9H"><img src="https://i.imgur.com/UlB5k9H.png" title="source: imgur.com" /></a>
 
 <H2>Setup Remote Desktop for non-administrative users on Client-1<H2>
 
@@ -121,8 +128,7 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 2. Click “Remote Desktop”
 3. Allow “domain users” access to remote desktop
 
-<a href="https://imgur.com/POD6uDf"><img src="https://i.imgur.com/POD6uDf.png" title="source: imgur.com" /></a>
-
+<a href="https://imgur.com/lyyCc33"><img src="https://i.imgur.com/lyyCc33.png" title="source: imgur.com" /></a>
 
 4. You can now log into Client-1 as a normal, non-administrative user now
 5. Normally you’d want to do this with Group Policy that allows you to change MANY systems at once
@@ -180,13 +186,13 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 
 4. Run the script and observe the accounts being created
    
-<a href="https://imgur.com/EhpAKFp"><img src="https://i.imgur.com/EhpAKFp.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/Vh3mwmn"><img src="https://i.imgur.com/Vh3mwmn.png" title="source: imgur.com" /></a>
 
 5. When finished, open Active Directory Users and Control (ADUC) and observe the accounts in the appropriate OU
    
 6. Attempt to log into Client-1 with one of the accounts (take note of the password in the script)
 
-<a href="https://imgur.com/st3m5KO"><img src="https://i.imgur.com/st3m5KO.png" title="source: imgur.com" /></a>
+<a href="https://imgur.com/ViJtkIb"><img src="https://i.imgur.com/ViJtkIb.png" title="source: imgur.com" /></a>
 
 
 We've reached the end of this exciting tutorial! In the [next tutorial](https://github.com/ItradeLQ/azure-network-protocols), the focus will be reviewing various network traffic to and from Azure Virtual Machines with Wireshark and experimenting with Network Security Groups (NSGs).
