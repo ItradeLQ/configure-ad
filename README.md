@@ -186,13 +186,13 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 
 4. Run the script and observe the accounts being created
    
-<a href="https://imgur.com/Vh3mwmn"><img src="https://i.imgur.com/Vh3mwmn.png" title="source: imgur.com" /></a>
+![image 18](https://github.com/ItradeLQ/configure-ad/assets/112427894/b256a272-3c13-4470-ad62-14fe46ca8f1a)
+
 
 5. When finished, open Active Directory Users and Control (ADUC) and observe the accounts in the appropriate OU
    
 6. Attempt to log into Client-1 with one of the accounts (take note of the password in the script)
 
-<a href="https://imgur.com/ViJtkIb"><img src="https://i.imgur.com/ViJtkIb.png" title="source: imgur.com" /></a>
-
+![image 19](https://github.com/ItradeLQ/configure-ad/assets/112427894/704b4b85-d609-48fb-b857-d8899ba6e161)
 
 We've reached the end of this exciting tutorial! In the [next tutorial](https://github.com/ItradeLQ/azure-network-protocols), the focus will be reviewing various network traffic to and from Azure Virtual Machines with Wireshark and experimenting with Network Security Groups (NSGs).
