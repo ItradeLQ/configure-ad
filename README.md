@@ -43,7 +43,8 @@ Here is an illustration of what we are doing:
 <a href="https://imgur.com/8pnNkjj"><img src="https://i.imgur.com/8pnNkjj.png" title="source: imgur.com" /></a>
 
 
-<a href="https://imgur.com/2URx1hb"><img src="https://i.imgur.com/2URx1hb.png" title="source: imgur.com" /></a>
+![Image 3   15](https://github.com/ItradeLQ/configure-ad/assets/112427894/f0fa9738-ef9e-491a-90f3-9adc232a8b0d)
+
 
 <h2>Ensure Connection between Client and Domain Controller<h2>
 
@@ -51,20 +52,20 @@ Here is an illustration of what we are doing:
 
 <a href="https://imgur.com/1eG0bfT"><img src="https://i.imgur.com/1eG0bfT.png" title="source: imgur.com" /></a>
 
-Notice how, we are getting a "request timed out." Let us fix that. 
+Notice how we are getting a "request timed out." Let us fix that. 
 
 2. Login to the Domain Controller and enable ICMPv4 on the local Windows Firewall. Keep client-1 instance open. 
 
-- Start Menu -> Windows Defender Firewall with Advanced Security programme -> Inbound Rules -> Sort by Protocol -> 
+- Start Menu -> Windows Defender Firewall with Advanced Security programme -> Inbound Rules -> Sort by Protocol 
 
 - Enable "Core Networking Diagnostics - ICMP Echo Request (ICMPv4-In) Private and Domain Profiles. 2 Inbound Rules.
-
-<a href="https://imgur.com/xYKRbfw"><img src="https://i.imgur.com/xYKRbfw.png" title="source: imgur.com" /></a>
-
+  
+![Image 5](https://github.com/ItradeLQ/configure-ad/assets/112427894/c12e7b2a-287a-4fd9-b2b0-f54bd8103368)
 
 3. Return to Client-1 to see the ping succeed
 
-<a href="https://imgur.com/9WQydZ5"><img src="https://i.imgur.com/9WQydZ5.png" title="source: imgur.com" /></a>
+![image 6](https://github.com/ItradeLQ/configure-ad/assets/112427894/afbf3129-e225-4e77-bbad-8edf75db7a49)
+
 
 ICMP is what is used to ping the VM, hence why traffic resumes when it is enabled.
 
@@ -79,9 +80,7 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 
 2. Promote as a DC: Setup a new forest as mydomain.com (can be anything, just remember what it is)
 
-<a href="https://imgur.com/rxf1BoP"><img src="https://i.imgur.com/rxf1BoP.png" title="source: imgur.com" /></a>
-
-![2023-01-18 09 38 10 coursecareers com 78e39ae4181d](https://user-images.githubusercontent.com/109401839/213215738-c6379380-e5b8-438b-95a8-6906a16ff339.jpg)
+![image 8](https://github.com/ItradeLQ/configure-ad/assets/112427894/d6fb09eb-3ace-4ec0-b772-e69bfff678dd)
 
 3. Restart and then log back into DC-1 as user: mydomain.com\labuser which is the Fully Qualified Domain Name (FQDN) to the DC-1 Sever.
 
@@ -100,14 +99,14 @@ ICMP is what is used to ping the VM, hence why traffic resumes when it is enable
 6. Create a new employee named “Jane Doe” (same password) with the username of “jane_admin”
 7. Add jane_admin to the “Domain Admins” Security Group
 
-<a href="https://imgur.com/XaLDemD"><img src="https://i.imgur.com/XaLDemD.png" title="source: imgur.com" /></a>
+![image 14 combined](https://github.com/ItradeLQ/configure-ad/assets/112427894/e9cb360b-c4c6-42b3-a210-21e6fb242877)
 
 8. Log out/close the Remote Desktop connection to DC-1 and log back in as “mydomain.com\jane_admin"
 9. User jane_admin as your admin account from now on
 
 <h2>Join Client-1 to your domain (mydomain.com)<h2>
 
-<a href="https://imgur.com/2URx1hb"><img src="https://i.imgur.com/2URx1hb.png" title="source: imgur.com" /></a>
+![Image 3   15](https://github.com/ItradeLQ/configure-ad/assets/112427894/486c8613-f721-47ed-90dd-9bb81f5d55dd)
 
 1. From the Azure Portal, set Client-1’s DNS settings to the DC’s Private IP address
 2. From the Azure Portal, restart Client-1, which will flush DNS cache
